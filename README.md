@@ -12,6 +12,15 @@
 
 ---
 
+## 👨‍⚖️ Judges Path
+If you are evaluating this project, please follow this documentation path:
+1. **[Judges Q&A](JUDGES_QA.md):** Common questions about impact, data, and accuracy.
+2. **[Data Deep-Dive](data_pipeline/README.md):** How we extracted 7 years of satellite data.
+3. **[Model Architecture](models/README.md):** The XGBoost engine and feature engineering.
+4. **[Live Demo](https://bytebender77.github.io/airsight-ai):** See it in action.
+
+---
+
 ## 🌟 The Vision
 Air pollution is the "silent killer," yet real-time data is often missing in developing regions. **AirSight AI** bridges this gap by using historical satellite data (2015–2021) and advanced Machine Learning to provide:
 1. **Historical Visibility:** A 7-year global timeline of PM2.5 trends.
