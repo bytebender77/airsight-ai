@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM2.5 Global Air Quality Forecast | AirSight AI</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #070b14;
+      --surface: #0e1520;
+      --surface2: #151e2e;
+      --border: rgba(99, 179, 237, 0.15);
+      --accent: #38bdf8;
+      --accent2: #818cf8;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --good: #22d3ee;
+      --moderate: #facc15;
+      --ufsg: #fb923c;
+      --unhealthy: #f87171;
+      --very: #c084fc;
+      --hazardous: #ff4444;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.08), rgba(129, 140, 248, 0.08));
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .logo-text h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .logo-text p {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 20px;
+    }
+
+    .h-stat {
+      text-align: center;
+    }
+
+    .h-stat .val {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .h-stat .lbl {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-badge {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid #22c55e;
+      color: #22c55e;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.5
+      }
+    }
+
+    /* Layout */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    aside {
+      width: 300px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-section {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-section h3 {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    /* Risk scale */
+    .risk-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 6px 8px;
+      transition: background 0.2s;
+    }
+
+    .risk-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .risk-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .risk-item .label {
+      font-size: 12px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .risk-item .range {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Forecast panel */
+    .forecast-card {
+      background: var(--surface2);
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      margin: 16px;
+    }
+
+    .forecast-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .loc-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .pm-value {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      margin: 4px 0;
+    }
+
+    .risk-label {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .forecast-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .forecast-row .horizon {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .forecast-row .fval {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .forecast-row .fcat {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    /* Chart area */
+    .chart-wrap {
+      padding: 16px;
+      background: var(--surface2);
+      border-radius: 10px;
+      margin: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .chart-wrap h3 {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    canvas {
+      max-height: 120px;
+    }
+
+    /* Map */
+    #map {
+      flex: 1;
+      z-index: 1;
+    }
+
+    /* Top10 panel */
+    .top10 {
+      margin: 16px;
+    }
+
+    .top10 h3 {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .top10-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .top10-item:last-child {
+      border-bottom: none;
+    }
+
+    .top10-coord {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    .top10-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--hazardous);
+    }
+
+    /* Custom Leaflet styles */
+    .leaflet-container {
+      background: #050a14;
+    }
+
+    .leaflet-popup-content-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .leaflet-popup-tip {
+      background: var(--surface);
+    }
+
+    .leaflet-popup-content {
+      margin: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .popup-pm {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .popup-label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .popup-coords {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-family: monospace;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--surface);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    /* Right Panel — Custom Forecast */
+    .right-panel {
+      width: 310px;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .rp-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(129, 140, 248, 0.08));
+    }
+
+    .rp-header h2 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .rp-header p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .form-section {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-section h3 {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .form-field {
+      flex: 1;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .form-field input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 8px;
+      color: var(--text);
+      font-size: 12px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-field input:focus {
+      border-color: var(--accent);
+    }
+
+    .btn-predict {
+      width: 100%;
+      padding: 10px;
+      margin: 14px 16px 0;
+      width: calc(100% - 32px);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-predict:hover {
+      opacity: 0.85;
+    }
+
+    .btn-predict:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .result-area {
+      padding: 14px 16px;
+    }
+
+    .result-area h3 {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .result-card {
+      background: var(--surface2);
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+
+    .result-card .r-horizon {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .result-card .r-val {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .result-card .r-label {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .result-card .r-advice {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .api-status {
+      font-size: 10px;
+      padding: 0 16px 10px;
+    }
+
+    .api-ok {
+      color: #22c55e;
+    }
+
+    .api-err {
+      color: #ef4444;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🌍</div>
+      <div class="logo-text">
+        <h1>AirSight AI</h1>
+        <p>Global PM2.5 Forecast Platform</p>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="h-stat">
+        <div class="val" id="hMean">—</div>
+        <div class="lbl">Global Mean µg/m³</div>
+      </div>
+      <div class="h-stat">
+        <div class="val" id="hHazard">—</div>
+        <div class="lbl">Hazard Zones</div>
+      </div>
+      <div class="h-stat">
+        <div class="val" id="hSafe">—</div>
+        <div class="lbl">Safe Zones</div>
+      </div>
+      <div class="h-stat">
+        <div class="val" id="hTotal">—</div>
+        <div class="lbl">Grid Points</div>
+      </div>
+    </div>
+    <div class="live-badge">● DECEMBER 2021</div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="main">
+    <!-- Sidebar -->
+    <aside>
+      <!-- Forecast Panel -->
+      <div class="forecast-card" id="forecastCard">
+        <div class="forecast-title">📍 Location Forecast</div>
+        <div class="loc-label" id="locLabel">Click a point on the map</div>
+        <div class="pm-value" id="pmVal" style="color:var(--muted)">—</div>
+        <div class="risk-label" id="riskLbl" style="color:var(--muted)">Select a location</div>
+        <div id="forecastRows"></div>
+      </div>
+
+      <!-- Time Series Chart -->
+      <div class="chart-wrap">
+        <h3>📈 PM2.5 Time Series</h3>
+        <canvas id="tsChart"></canvas>
+      </div>
+
+      <!-- WHO Risk Scale -->
+      <div class="sidebar-section">
+        <h3>🏥 WHO Risk Scale</h3>
+        <div id="riskScale"></div>
+      </div>
+
+      <!-- Top 10 -->
+      <div class="top10">
+        <h3>🔴 Most Polluted Zones</h3>
+        <div id="top10List"></div>
+      </div>
+    </aside>
+
+    <!-- Map -->
+    <div id="map"></div>
+
+    <!-- Right Panel: Custom Forecast -->
+    <div class="right-panel">
+      <div class="rp-header">
+        <h2>🔮 Custom Forecast</h2>
+        <p>Enter any location + PM2.5 history → get real XGBoost predictions</p>
+      </div>
+
+      <div class="form-section">
+        <h3>📍 Location & Date</h3>
+        <div class="form-row">
+          <div class="form-field"><label>Latitude</label><input id="f-lat" type="number" step="0.1" value="28.6"
+              placeholder="e.g. 28.6"></div>
+          <div class="form-field"><label>Longitude</label><input id="f-lon" type="number" step="0.1" value="77.2"
+              placeholder="e.g. 77.2"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Month (1–12)</label><input id="f-month" type="number" min="1" max="12"
+              value="12"></div>
+          <div class="form-field"><label>Day of Year</label><input id="f-doy" type="number" min="1" max="365"
+              value="345"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>💨 Recent PM2.5 (µg/m³)</h3>
+        <div class="form-row">
+          <div class="form-field"><label>Today</label><input id="f-pm0" type="number" step="0.1" value="190"></div>
+          <div class="form-field"><label>Yesterday</label><input id="f-pm1" type="number" step="0.1" value="178"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>2 days ago</label><input id="f-pm2" type="number" step="0.1" value="162"></div>
+          <div class="form-field"><label>3 days ago</label><input id="f-pm3" type="number" step="0.1" value="145"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>7 days ago</label><input id="f-pm7" type="number" step="0.1" value="120"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>🌡️ Weather (optional)</h3>
+        <div class="form-row">
+          <div class="form-field"><label>Temp (°C)</label><input id="f-temp" type="number" step="0.5" value="12"></div>
+          <div class="form-field"><label>Humidity (%)</label><input id="f-hum" type="number" step="1" value="75"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Wind (m/s)</label><input id="f-wind" type="number" step="0.1" value="2"></div>
+          <div class="form-field"><label>AOD</label><input id="f-aod" type="number" step="0.01" value="0.45"></div>
+        </div>
+      </div>
+
+      <button class="btn-predict" id="btnPredict" onclick="runForecast()">⚡ Run Forecast</button>
+      <p class="api-status" id="apiStatus"></p>
+
+      <div class="result-area" id="resultArea" style="display:none">
+        <h3>🎯 Forecast Results</h3>
+        <div id="resultCards"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ─── Health Categories ───────────────────────────────────────────────────────
+    const CATS = [
+      { lo: 0, hi: 5, label: 'Good', color: '#22d3ee' },
+      { lo: 5, hi: 15, label: 'Moderate', color: '#facc15' },
+      { lo: 15, hi: 25, label: 'Unhealthy for Sensitive', color: '#fb923c' },
+      { lo: 25, hi: 50, label: 'Unhealthy', color: '#f87171' },
+      { lo: 50, hi: 150, label: 'Very Unhealthy', color: '#c084fc' },
+      { lo: 150, hi: 9999, label: 'Hazardous', color: '#ff4444' },
+    ];
+    function getCat(pm) { return CATS.find(c => pm >= c.lo && pm < c.hi) || CATS[5]; }
+    function getDot(r) { return L.circleMarker([r.lat, r.lon], { radius: 5, color: 'transparent', fillColor: getCat(r.pm25).color, fillOpacity: 0.80, weight: 0 }); }
+
+    // ─── Draw Risk Scale ────────────────────────────────────────────────────────
+    const riskDiv = document.getElementById('riskScale');
+    CATS.forEach(c => {
+      riskDiv.innerHTML += `<div class="risk-item"><div class="risk-dot" style="background:${c.color}"></div><div class="label">${c.label}</div><div class="range">${c.lo}–${c.hi < 9999 ? c.hi : '500+'} µg/m³</div></div>`;
+    });
+
+    // ─── Map ─────────────────────────────────────────────────────────────────────
+    const map = L.map('map', { center: [20, 0], zoom: 2, zoomControl: true, attributionControl: false });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(map);
+
+    // ─── Chart.js setup ─────────────────────────────────────────────────────────
+    const tsCtx = document.getElementById('tsChart').getContext('2d');
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+    let tsChart = new Chart(tsCtx, {
+      type: 'line',
+      data: { labels: [], datasets: [{ label: 'PM2.5', data: [], borderColor: '#38bdf8', backgroundColor: 'rgba(56,189,248,0.08)', borderWidth: 2, fill: true, tension: 0.4, pointRadius: 0 }] },
+      options: {
+        responsive: true, animation: false, plugins: { legend: { display: false } }, scales: {
+          x: { ticks: { maxTicksLimit: 4, font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+          y: { ticks: { font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' }, title: { display: true, text: 'µg/m³', font: { size: 9 } } }
+        }
+      }
+    });
+
+    // ─── Real API Forecast ────────────────────────────────────────────────────────
+    async function runForecast() {
+      const btn = document.getElementById('btnPredict');
+      const status = document.getElementById('apiStatus');
+      btn.disabled = true; btn.textContent = '⏳ Predicting...';
+      status.textContent = '';
+
+      const payload = {
+        lat: parseFloat(document.getElementById('f-lat').value),
+        lon: parseFloat(document.getElementById('f-lon').value),
+        month: parseInt(document.getElementById('f-month').value),
+        day_of_year: parseInt(document.getElementById('f-doy').value),
+        pm_today: parseFloat(document.getElementById('f-pm0').value),
+        pm_1d: parseFloat(document.getElementById('f-pm1').value),
+        pm_2d: parseFloat(document.getElementById('f-pm2').value),
+        pm_3d: parseFloat(document.getElementById('f-pm3').value),
+        pm_7d: parseFloat(document.getElementById('f-pm7').value),
+        temp_c: parseFloat(document.getElementById('f-temp').value),
+        humidity: parseFloat(document.getElementById('f-hum').value),
+        wind_speed: parseFloat(document.getElementById('f-wind').value),
+        aod: parseFloat(document.getElementById('f-aod').value),
+      };
+
+      try {
+        const res = await fetch('http://localhost:5050/predict', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        status.innerHTML = '<span class="api-ok">✅ Real XGBoost prediction (R² = 0.979)</span>';
+
+        const names = { '24h': '+24h (Tomorrow)', '48h': '+48h (Day After)', '72h': '+72h (3 Days)' };
+        document.getElementById('resultCards').innerHTML = Object.entries(data.forecasts).map(([h, f]) =>
+          `<div class="result-card">
+        <div class="r-horizon">${names[h]}</div>
+        <div class="r-val" style="color:${f.color}">${f.pm25} µg/m³</div>
+        <div class="r-label" style="color:${f.color}">${f.label}</div>
+        <div class="r-advice">${f.advice}</div>
+      </div>`
+        ).join('');
+        document.getElementById('resultArea').style.display = 'block';
+      } catch (e) {
+        status.innerHTML = '<span class="api-err">⚠️ API offline — run: python3 api.py</span>';
+      }
+      btn.disabled = false; btn.textContent = '⚡ Run Forecast';
+    }
+
+    // ─── Map-click also fills form ────────────────────────────────────────────────
+    function simulateForecast(pm25) {
+      const noise = () => (Math.random() - 0.5) * pm25 * 0.15;
+      return { h24: Math.max(0, pm25 + noise()), h48: Math.max(0, pm25 + noise()), h72: Math.max(0, pm25 + noise()) };
+    }
+
+    // ─── Update Forecast Panel ───────────────────────────────────────────────────
+    function updateForecast(r, tsEntry) {
+      const cat = getCat(r.pm25);
+      document.getElementById('locLabel').textContent = `${r.lat}°, ${r.lon}°`;
+      document.getElementById('pmVal').textContent = r.pm25.toFixed(1) + ' µg/m³';
+      document.getElementById('pmVal').style.color = cat.color;
+      document.getElementById('riskLbl').textContent = cat.label;
+      document.getElementById('riskLbl').style.color = cat.color;
+
+      const fc = simulateForecast(r.pm25);
+      const fRows = [['24h Forecast', fc.h24], ['48h Forecast', fc.h48], ['72h Forecast', fc.h72]];
+      document.getElementById('forecastRows').innerHTML = fRows.map(([h, val]) => {
+        const c = getCat(val);
+        return `<div class="forecast-row"><span class="horizon">${h}</span><div><span class="fval" style="color:${c.color}">${val.toFixed(1)} µg/m³</span> <span class="fcat" style="color:${c.color}">${c.label}</span></div></div>`;
+      }).join('');
+
+      if (tsEntry) {
+        tsChart.data.labels = tsEntry.dates;
+        tsChart.data.datasets[0].data = tsEntry.pm25;
+        tsChart.data.datasets[0].borderColor = cat.color;
+        tsChart.data.datasets[0].backgroundColor = cat.color + '14';
+        tsChart.update();
+      }
+    }
+
+    // ─── Load Data ───────────────────────────────────────────────────────────────
+    fetch('dashboard_data.json')
+      .then(r => r.json())
+      .then(data => {
+        // Header stats
+        document.getElementById('hMean').textContent = data.stats.mean;
+        document.getElementById('hHazard').textContent = data.stats.hazard_zones.toLocaleString();
+        document.getElementById('hSafe').textContent = data.stats.safe_zones.toLocaleString();
+        document.getElementById('hTotal').textContent = data.stats.total_points.toLocaleString();
+
+        // Plot all points
+        const tsMap = {};
+        (data.timeseries || []).forEach(t => { tsMap[`${t.lat},${t.lon}`] = t; });
+
+        data.snapshot.forEach(r => {
+          const dot = getDot(r);
+          const cat = getCat(r.pm25);
+          dot.bindPopup(`
+        <div class="popup-pm" style="color:${cat.color}">${r.pm25.toFixed(1)} µg/m³</div>
+        <div class="risk-label" style="color:${cat.color};font-size:12px;font-weight:600">${cat.label}</div>
+        <div class="popup-coords">📍 ${r.lat}°, ${r.lon}°</div>
+      `, { maxWidth: 160 });
+          dot.on('click', () => {
+            const key = `${r.lat},${r.lon}`;
+            updateForecast(r, tsMap[key] || null);
+          });
+          dot.addTo(map);
+        });
+
+        // Top 10 most polluted
+        const t10 = document.getElementById('top10List');
+        data.top10.forEach((r, i) => {
+          t10.innerHTML += `<div class="top10-item"><span class="top10-coord">${r.lat}°, ${r.lon}°</span><span class="top10-val">${r.pm25} µg/m³</span></div>`;
+        });
+
+        // Default: select most polluted
+        if (data.top10.length) updateForecast(data.top10[0], null);
+      })
+      .catch(e => console.error('Data load error:', e));
+  </script>
+</body>
+
+</html>

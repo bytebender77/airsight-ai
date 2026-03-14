@@ -1,0 +1,22 @@
+# AirSight AI — PM2.5 Forecast Platform
+# Install with: pip install -r requirements.txt
+
+# Core ML
+xgboost>=2.0.0
+scikit-learn>=1.3.0
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Interpolation
+scipy>=1.11.0
+
+# Dashboard API
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Data download (optional — only needed to re-run data_pipeline/)
+earthengine-api>=0.1.370
+
+# Visualization (optional — for generating charts)
+matplotlib>=3.7.0
+seaborn>=0.12.0
