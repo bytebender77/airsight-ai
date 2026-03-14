@@ -6,6 +6,9 @@
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
 ![Tech](https://img.shields.io/badge/Tech-XGBoost%20%7C%20Flask%20%7C%20Leaflet-green)
 ![Accuracy](https://img.shields.io/badge/Accuracy-R%C2%B2%200.979-orange)
+![Live Demo](https://img.shields.io/badge/Live-Dashboard-blueviolet?style=flat&logo=github&logoColor=white)
+
+**🔗 Live Dashboard:** [bytebender77.github.io/airsight-ai](https://bytebender77.github.io/airsight-ai)
 
 ---
 
