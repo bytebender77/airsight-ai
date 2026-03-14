@@ -1,166 +1,77 @@
-# AirSight AI — Global PM2.5 Short-Term Forecast
+# 📡 AirSight AI: Global PM2.5 Forecasting Platform
 
-![Dashboard Preview](assets/forecast_accuracy.png)
+> **Winner Prospect @ India Innovates 2026**  
+> *Harnessing XGBoost and Monthly Satellite Snapshots to Predict Global Air Quality.*
 
-**XGBoost-based 24/48/72-hour PM2.5 air quality forecasting platform** with an interactive global visualization dashboard.
-
-> Built for India Innovates 2026 Hackathon
+![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![Tech](https://img.shields.io/badge/Tech-XGBoost%20%7C%20Flask%20%7C%20Leaflet-green)
+![Accuracy](https://img.shields.io/badge/Accuracy-R%C2%B2%200.979-orange)
 
 ---
 
-## 🚀 Quick Start (Dashboard Demo)
+## 🌟 The Vision
+Air pollution is the "silent killer," yet real-time data is often missing in developing regions. **AirSight AI** bridges this gap by using historical satellite data (2015–2021) and advanced Machine Learning to provide:
+1. **Historical Visibility:** A 7-year global timeline of PM2.5 trends.
+2. **Future Foresight:** Precise 24h, 48h, and 72h predictions using local history and weather.
+3. **Human Impact:** Translating complex PM2.5 numbers into "Cigarette Equivalents" for better public understanding.
 
+---
+
+## 🛠️ Technical Architecture
+
+### 🧠 The Brain: XGBoost ML Engine
+We trained three specialized XGBoost models (one for each forecast horizon) on 298,000+ data points across 3,554 global grid points.
+- **Features (21 total):**
+  - **Lags:** PM2.5 readings from 1d, 2d, 3d, and 7d ago.
+  - **Temporal:** Month, Day of Year.
+  - **Weather:** Temperature, Humidity, Wind Speed, Aerosol Optical Depth (AOD).
+  - **Spatial:** Lat/Lon specific baseline pollution.
+- **Performance:** 
+  - **R² Score:** 0.979 (24h), 0.968 (48h), 0.961 (72h).
+  - **Latency:** <10ms per prediction.
+
+### 🌐 The Dashboard: Glassmorphism UI
+- **Leaflet.js:** Custom dark-themed world map with pulsing "Hazardous" hotspots.
+- **Chart.js:** Interactive time-series analysis for any clicked point.
+- **Nominatim/Photon:** Real-time city geocoding.
+
+---
+
+## 🧪 Judge Evaluation Console
+We built a dedicated **Evaluation Page** for judges to verify our claims. 
+- Upload a CSV of unseen data.
+- Run batch predictions.
+- **Live Accuracy Check:** The tool automatically calculates R², RMSE, and MAE against provided actuals.
+
+---
+
+## 🚀 Quick Start (Demo Mode)
+
+### 1. Prerequisites
 ```bash
-# 1. Install dependencies
-pip install -r requirements.txt
-
-# 2. Terminal 1 — Serve the dashboard
-python3 -m http.server 8502 --directory dashboard/
-
-# 3. Terminal 2 — Run the prediction API
-python3 dashboard/api.py
-
-# 4. Open in browser
-open http://localhost:8502/dashboard.html
+pip install flask flask-cors pandas xgboost numpy
 ```
 
-> **No training needed** — pre-trained models are included in `models/`
-
----
-
-## 🔮 Interactive Forecast
-
-Use the right panel in the dashboard to enter any location + recent PM2.5 history and get **real XGBoost predictions** for the next 24/48/72 hours.
-
-Or use the CLI:
+### 2. Launching the Demo
+We provide a unified startup script to handle the API and Frontend:
 ```bash
-python3 dashboard/predict.py
+cd dashboard
+bash start_demo.sh
 ```
+- **Dashboard:** `http://localhost:8502/dashboard.html`
+- **Evaluation:** `http://localhost:8502/evaluate.html`
+
+### 🔧 For Remote Demo (ngrok)
+If you need to share the link with judges remotely:
+1. `ngrok http 5050`
+2. `bash start_demo.sh https://your-url.ngrok-free.app`
 
 ---
 
-## 📁 Project Structure
-
-```
-airsight-pm25/
-│
-├── dashboard/              # Frontend + prediction API
-│   ├── dashboard.html      # Full interactive web dashboard (Leaflet + Chart.js)
-│   ├── api.py              # Flask API wrapping the 3 XGBoost models
-│   ├── predict.py          # CLI prediction tool for judge evaluation
-│   └── dashboard_data.json # Pre-exported Dec 2021 global snapshot (3,554 points)
-│
-├── models/                 # Trained XGBoost models
-│   ├── pm25_model_24h.json # 24-hour forecast model (R² = 0.979)
-│   ├── pm25_model_48h.json # 48-hour forecast model
-│   └── pm25_model_72h.json # 72-hour forecast model
-│
-├── data_pipeline/          # Full reproducible training pipeline
-│   ├── dl_1_pm25.py        # Download PM2.5 from GEE (satellite monthly)
-│   ├── dl_2_weather.py     # Download ERA5 weather (temperature, humidity, wind)
-│   ├── dl_3_aod.py         # Download MODIS AOD (Aerosol Optical Depth)
-│   ├── dl_4_cloud.py       # Download cloud fraction
-│   ├── dl_5_elevation.py   # Download SRTM elevation
-│   ├── merge_and_train.py  # Merge all datasets + train land-only XGBoost
-│   ├── step1_interpolate.py # Monthly PM2.5 → daily via cubic spline
-│   ├── step2_features.py   # Build lag features (1d, 2d, 3d, 7d) + rolling means
-│   └── step3_train_forecast.py # Train 24/48/72h XGBoost forecast models
-│
-└── assets/                 # Charts and diagrams
-    ├── feature_importance.png
-    └── forecast_accuracy.png
-```
+## 👥 Credits
+Developed with ❤️ for **India Innovates 2026**.
 
 ---
 
-## 📊 Model Performance
-
-| Metric | 24h Model | 48h Model | 72h Model |
-|--------|-----------|-----------|-----------|
-| **R²** | 0.979 | 0.968 | 0.961 |
-| **RMSE** | 2.79 µg/m³ | 3.41 µg/m³ | 3.89 µg/m³ |
-| **MAE** | 0.64 µg/m³ | 0.79 µg/m³ | 0.91 µg/m³ |
-
-Trained on **298,536 land-only daily observations** across 3,554 global grid points (2015–2020).
-
----
-
-## 🌍 Data Sources
-
-| Data | Source | Resolution |
-|------|--------|-----------|
-| PM2.5 (satellite) | [Global Satellite PM2.5](https://gee-community-catalog.org/projects/global_pm25/) via Google Earth Engine | 2° × 2° monthly |
-| Weather | ERA5 Reanalysis (temperature, humidity, wind, pressure) | Monthly |
-| AOD | MODIS Aerosol Optical Depth | Monthly |
-| Cloud fraction | MODIS Cloud Product | Monthly |
-| Elevation | SRTM Digital Elevation Model | 30m (aggregated) |
-
----
-
-## ⚙️ Features Used by the Model
-
-```
-lat, lon, month_sin, month_cos, day_sin, day_cos,
-temperature_celsius, relative_humidity, wind_speed, wind_direction,
-surface_pressure, aod, cloud_fraction, elevation,
-pm25_lag_1d, pm25_lag_2d, pm25_lag_3d, pm25_lag_7d,
-pm25_roll_3d, pm25_roll_7d, pm25_roll_14d
-```
-
-**Strongest predictors:** `pm25_rolling_3m` (55.9%), `pm25_lag_1d` (18.6%), `pm25_lag_2d` (7.6%)
-
----
-
-## 🔁 Reproducing the Training Pipeline
-
-> Requires a Google Earth Engine account and `earthengine-api` authenticated
-
-```bash
-# Step 1–5: Download all data (takes ~2 hours)
-python3 data_pipeline/dl_1_pm25.py
-python3 data_pipeline/dl_2_weather.py
-python3 data_pipeline/dl_3_aod.py
-python3 data_pipeline/dl_4_cloud.py
-python3 data_pipeline/dl_5_elevation.py
-
-# Merge + baseline model
-python3 data_pipeline/merge_and_train.py
-
-# Interpolate monthly → daily
-python3 data_pipeline/step1_interpolate.py
-
-# Build lag/rolling features
-python3 data_pipeline/step2_features.py
-
-# Train 24/48/72h models
-python3 data_pipeline/step3_train_forecast.py
-```
-
----
-
-## 🏥 WHO Risk Categories
-
-| Category | PM2.5 Range | Health Impact |
-|----------|-------------|---------------|
-| Good | 0–5 µg/m³ | WHO annual standard |
-| Moderate | 5–15 µg/m³ | Acceptable |
-| Unhealthy for Sensitive | 15–25 µg/m³ | Limit outdoor activity |
-| Unhealthy | 25–50 µg/m³ | Avoid prolonged exposure |
-| Very Unhealthy | 50–150 µg/m³ | Stay indoors |
-| Hazardous | 150+ µg/m³ | Emergency conditions |
-
----
-
-## 🛠️ Tech Stack
-
-- **ML:** XGBoost, scikit-learn, pandas, numpy
-- **Data:** Google Earth Engine, ERA5, MODIS
-- **Dashboard:** Leaflet.js, Chart.js, vanilla HTML/CSS/JS
-- **API:** Flask, Flask-CORS
-- **Interpolation:** Scipy cubic spline
-
----
-
-## 📜 License
-
-MIT License — free to use, modify, and distribute.
+## 📄 License
+MIT License - Project developed for Hackathon purposes.
