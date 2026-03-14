@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Evaluation | AirSight AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #070b14;
+            --surface: #0e1520;
+            --surface2: #151e2e;
+            --surface3: #1c2840;
+            --border: rgba(99, 179, 237, 0.15);
+            --accent: #38bdf8;
+            --accent2: #818cf8;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --good: #22d3ee;
+            --mod: #facc15;
+            --ufsg: #fb923c;
+            --bad: #f87171;
+            --very: #c084fc;
+            --haz: #ff4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column
+        }
+
+        /* ── Nav ── */
+        nav {
+            padding: 12px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(90deg, rgba(56, 189, 248, .08), rgba(129, 140, 248, .08));
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px
+        }
+
+        .logo-text h1 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent)
+        }
+
+        .logo-text p {
+            font-size: 10px;
+            color: var(--muted)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 6px
+        }
+
+        .nav-btn {
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background .2s
+        }
+
+        .nav-btn.ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted)
+        }
+
+        .nav-btn.ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent)
+        }
+
+        .nav-btn.active {
+            background: rgba(56, 189, 248, .15);
+            border: 1px solid var(--accent);
+            color: var(--accent)
+        }
+
+        /* ── Main ── */
+        main {
+            flex: 1;
+            padding: 28px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%
+        }
+
+        .page-title {
+            margin-bottom: 6px
+        }
+
+        .page-title h2 {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .page-title p {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 20px
+        }
+
+        .card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        /* ── Tabs ── */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--surface2);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 20px;
+            width: fit-content
+        }
+
+        .tab {
+            padding: 8px 20px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--muted);
+            transition: all .2s;
+            border: none;
+            background: transparent
+        }
+
+        .tab.active {
+            background: var(--surface3);
+            color: var(--accent);
+            border: 1px solid var(--border)
+        }
+
+        .tab-panel {
+            display: none
+        }
+
+        .tab-panel.active {
+            display: block
+        }
+
+        /* ── Form grid ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px
+        }
+
+        .field label {
+            display: block;
+            font-size: 10px;
+            color: var(--muted);
+            margin-bottom: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .field input {
+            width: 100%;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: var(--text);
+            font-size: 13px;
+            font-family: 'Inter';
+            outline: none;
+            transition: border-color .2s
+        }
+
+        .field input:focus {
+            border-color: var(--accent)
+        }
+
+        .field-group {
+            background: var(--surface2);
+            border-radius: 10px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px
+        }
+
+        .field-group-title {
+            font-size: 10px;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-bottom: 10px
+        }
+
+        .optional-tag {
+            font-size: 9px;
+            color: var(--muted);
+            background: rgba(100, 116, 139, .1);
+            border: 1px solid rgba(100, 116, 139, .2);
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-left: 6px
+        }
+
+        /* ── Add row + CSV ── */
+        .btn {
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity .2s;
+            border: none;
+            font-family: 'Inter'
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff
+        }
+
+        .btn-ghost {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text)
+        }
+
+        .btn:disabled {
+            opacity: .5;
+            cursor: not-allowed
+        }
+
+        .btn:hover:not(:disabled) {
+            opacity: .85
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 14px
+        }
+
+        .csv-drop {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color .2s;
+            position: relative
+        }
+
+        .csv-drop:hover {
+            border-color: var(--accent)
+        }
+
+        .csv-drop input[type=file] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer
+        }
+
+        .csv-drop .icon {
+            font-size: 36px;
+            margin-bottom: 8px
+        }
+
+        .csv-drop p {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .csv-drop .hint {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px;
+            opacity: .7
+        }
+
+        /* ── Rows list ── */
+        .rows-list {
+            max-height: 280px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface2)
+        }
+
+        .row-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+            font-size: 12px
+        }
+
+        .row-item:last-child {
+            border-bottom: none
+        }
+
+        .row-item .coords {
+            font-family: monospace;
+            color: var(--accent);
+            font-size: 11px
+        }
+
+        .row-item .pms {
+            color: var(--muted);
+            font-size: 11px
+        }
+
+        .row-item .del {
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 14px;
+            transition: color .2s;
+            background: none;
+            border: none
+        }
+
+        .row-item .del:hover {
+            color: #f87171
+        }
+
+        .empty-rows {
+            padding: 24px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        /* ── Results ── */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 20px
+        }
+
+        .metric-card {
+            background: var(--surface2);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            text-align: center
+        }
+
+        .metric-card .horizon {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px
+        }
+
+        .metric-card .r2 {
+            font-size: 30px;
+            font-weight: 700;
+            line-height: 1
+        }
+
+        .metric-card .sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        .metric-card .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-top: 6px
+        }
+
+        .badge-ok {
+            background: rgba(34, 197, 94, .15);
+            color: #22c55e
+        }
+
+        .badge-warn {
+            background: rgba(251, 146, 60, .15);
+            color: #fb923c
+        }
+
+        .badge-bad {
+            background: rgba(239, 68, 68, .15);
+            color: #ef4444
+        }
+
+        /* ── Table ── */
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px
+        }
+
+        .result-table th {
+            background: var(--surface3);
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            font-weight: 600
+        }
+
+        .result-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04)
+        }
+
+        .result-table tr:last-child td {
+            border-bottom: none
+        }
+
+        .result-table tr:hover td {
+            background: rgba(255, 255, 255, .02)
+        }
+
+        .val {
+            font-weight: 700
+        }
+
+        .err-low {
+            color: #22c55e
+        }
+
+        .err-med {
+            color: #facc15
+        }
+
+        .err-high {
+            color: #f87171
+        }
+
+        .err-na {
+            color: var(--muted)
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface2)
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px
+        }
+
+        /* ── Status bar ── */
+        .status-bar {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .status-bar.loading {
+            background: rgba(56, 189, 248, .1);
+            border: 1px solid rgba(56, 189, 248, .3);
+            color: var(--accent)
+        }
+
+        .status-bar.success {
+            background: rgba(34, 197, 94, .1);
+            border: 1px solid rgba(34, 197, 94, .3);
+            color: #22c55e
+        }
+
+        .status-bar.error {
+            background: rgba(239, 68, 68, .1);
+            border: 1px solid rgba(239, 68, 68, .3);
+            color: #ef4444
+        }
+
+        /* ── Column legend ── */
+        .col-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px
+        }
+
+        .col-tag {
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600
+        }
+
+        .col-required {
+            background: rgba(56, 189, 248, .12);
+            color: var(--accent)
+        }
+
+        .col-actual {
+            background: rgba(129, 140, 248, .12);
+            color: var(--accent2)
+        }
+
+        .col-optional {
+            background: rgba(100, 116, 139, .1);
+            color: var(--muted)
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px
+        }
+    </style>
+    <script src="config.js"></script>
+</head>
+
+<body>
+
+    <!-- Nav -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🌍</div>
+            <div class="logo-text">
+                <h1>AirSight AI</h1>
+                <p>Global PM2.5 Forecast Platform</p>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="nav-btn ghost">🗺️ Global Map</a>
+            <a href="evaluate.html" class="nav-btn active">🧪 Model Evaluation</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-title">
+            <h2>🧪 Judge Evaluation Console</h2>
+            <p>Enter unseen data → get 24/48/72h predictions → compare with actuals to measure accuracy</p>
+        </div>
+
+        <!-- Input modes -->
+        <div class="card">
+            <div class="card-title">📥 Input Data</div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('manual')">✏️ Manual Entry</button>
+                <button class="tab" onclick="switchTab('csv')">📄 Upload CSV</button>
+            </div>
+
+            <!-- Manual Tab -->
+            <div class="tab-panel active" id="tab-manual">
+                <div class="field-group">
+                    <div class="field-group-title">📍 Location &amp; Date</div>
+                    <div class="form-grid">
+                        <div class="field"><label>Latitude</label><input id="m-lat" type="number" step="0.1"
+                                value="28.6" placeholder="-60 to 72"></div>
+                        <div class="field"><label>Longitude</label><input id="m-lon" type="number" step="0.1"
+                                value="77.2" placeholder="-180 to 180"></div>
+                        <div class="field"><label>Month (1-12)</label><input id="m-month" type="number" min="1" max="12"
+                                value="12"></div>
+                        <div class="field"><label>Day of Year</label><input id="m-doy" type="number" min="1" max="365"
+                                value="345"></div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field-group-title">💨 Recent PM2.5 (µg/m³)</div>
+                    <div class="form-grid">
+                        <div class="field"><label>Today</label><input id="m-pm0" type="number" step="0.1" value="190">
+                        </div>
+                        <div class="field"><label>Yesterday</label><input id="m-pm1" type="number" step="0.1"
+                                value="178"></div>
+                        <div class="field"><label>2 Days Ago</label><input id="m-pm2" type="number" step="0.1"
+                                value="162"></div>
+                        <div class="field"><label>3 Days Ago</label><input id="m-pm3" type="number" step="0.1"
+                                value="145"></div>
+                        <div class="field"><label>7 Days Ago</label><input id="m-pm7" type="number" step="0.1"
+                                value="120"></div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field-group-title">🎯 Actual Values (for accuracy)<span
+                            class="optional-tag">OPTIONAL</span></div>
+                    <div class="form-grid">
+                        <div class="field"><label>Actual +24h</label><input id="m-a24" type="number" step="0.1"
+                                placeholder="e.g. 155"></div>
+                        <div class="field"><label>Actual +48h</label><input id="m-a48" type="number" step="0.1"
+                                placeholder="e.g. 140"></div>
+                        <div class="field"><label>Actual +72h</label><input id="m-a72" type="number" step="0.1"
+                                placeholder="e.g. 138"></div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field-group-title">🌡️ Weather <span class="optional-tag">OPTIONAL — defaults used if
+                            blank</span></div>
+                    <div class="form-grid">
+                        <div class="field"><label>Temp (°C)</label><input id="m-temp" type="number" step="0.5"
+                                placeholder="22"></div>
+                        <div class="field"><label>Humidity (%)</label><input id="m-hum" type="number" step="1"
+                                placeholder="55"></div>
+                        <div class="field"><label>Wind (m/s)</label><input id="m-wind" type="number" step="0.1"
+                                placeholder="3"></div>
+                        <div class="field"><label>AOD</label><input id="m-aod" type="number" step="0.01"
+                                placeholder="0.3"></div>
+                    </div>
+                </div>
+
+                <button class="btn btn-ghost" onclick="addManualRow()">+ Add Row to Queue</button>
+            </div>
+
+            <!-- CSV Tab -->
+            <div class="tab-panel" id="tab-csv">
+                <div class="col-legend">
+                    <span class="col-tag col-required">lat</span>
+                    <span class="col-tag col-required">lon</span>
+                    <span class="col-tag col-required">month</span>
+                    <span class="col-tag col-required">day_of_year</span>
+                    <span class="col-tag col-required">pm_today</span>
+                    <span class="col-tag col-required">pm_1d</span>
+                    <span class="col-tag col-required">pm_2d</span>
+                    <span class="col-tag col-required">pm_3d</span>
+                    <span class="col-tag col-optional">pm_7d</span>
+                    <span class="col-tag col-optional">temp_c</span>
+                    <span class="col-tag col-optional">humidity</span>
+                    <span class="col-tag col-optional">wind_speed</span>
+                    <span class="col-tag col-optional">aod</span>
+                    <span class="col-tag col-actual">actual_24h</span>
+                    <span class="col-tag col-actual">actual_48h</span>
+                    <span class="col-tag col-actual">actual_72h</span>
+                </div>
+                <div class="csv-drop" id="csvDrop">
+                    <input type="file" id="csvFile" accept=".csv" onchange="handleCSV(event)">
+                    <div class="icon">📄</div>
+                    <p>Drop your CSV here or click to browse</p>
+                    <div class="hint">Blue = required &nbsp;|&nbsp; Purple = for accuracy &nbsp;|&nbsp; Gray = optional
+                    </div>
+                </div>
+                <div id="csvStatus" style="margin-top:10px"></div>
+                <div style="margin-top:12px">
+                    <a href="judge_sample.csv" download
+                        style="color:var(--accent);font-size:12px;text-decoration:none">⬇️ Download sample CSV
+                        template</a>
+                </div>
+            </div>
+
+            <!-- Queue -->
+            <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                    <span
+                        style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">📋
+                        Queue (<span id="queueCount">0</span> rows)</span>
+                    <button class="btn btn-ghost" style="padding:5px 12px;font-size:11px" onclick="clearQueue()">Clear
+                        All</button>
+                </div>
+                <div class="rows-list" id="rowsList">
+                    <div class="empty-rows">No rows added yet. Use the form above or upload a CSV.</div>
+                </div>
+            </div>
+
+            <div class="btn-row" style="margin-top:16px">
+                <button class="btn btn-primary" id="runBtn" onclick="runEvaluation()" disabled>⚡ Run Evaluation</button>
+                <span style="font-size:11px;color:var(--muted)" id="runHint">Add at least 1 row to run</span>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div id="statusBar" style="display:none"></div>
+
+        <!-- Results -->
+        <div id="resultsSection" style="display:none">
+
+            <!-- Metrics -->
+            <div class="card" id="metricsCard" style="display:none">
+                <div class="card-title">📊 Accuracy Metrics</div>
+                <div class="metrics-grid" id="metricsGrid"></div>
+            </div>
+
+            <!-- Table -->
+            <div class="card">
+                <div class="card-title">🔬 Prediction Results</div>
+                <div class="table-wrap">
+                    <table class="result-table" id="resultTable">
+                        <thead>
+                            <tr id="resultHead"></tr>
+                        </thead>
+                        <tbody id="resultBody"></tbody>
+                    </table>
+                </div>
+                <div class="btn-row" style="margin-top:14px">
+                    <button class="btn btn-ghost" onclick="exportCSV()">⬇️ Export Results CSV</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API = window.AIRSIGHT_API;
+        let queue = [];
+        let lastResults = null;
+
+        // ── Tabs ─────────────────────────────────────────────────────────────────────
+        function switchTab(name) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + name).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // ── Queue ─────────────────────────────────────────────────────────────────────
+        function g(id) { return document.getElementById(id); }
+        function fv(id) { const v = g(id)?.value?.trim(); return v === '' ? null : parseFloat(v); }
+
+        function addManualRow() {
+            const row = {
+                lat: fv('m-lat'), lon: fv('m-lon'), month: fv('m-month'), day_of_year: fv('m-doy'),
+                pm_today: fv('m-pm0'), pm_1d: fv('m-pm1'), pm_2d: fv('m-pm2'), pm_3d: fv('m-pm3'), pm_7d: fv('m-pm7'),
+            };
+            if (!row.lat || !row.lon || !row.pm_today || !row.pm_1d || !row.pm_2d || !row.pm_3d) {
+                showStatus('error', '⚠️ Please fill in Location, PM2.5 Today/Yesterday/2d/3d before adding.'); return;
+            }
+            const a24 = fv('m-a24'), a48 = fv('m-a48'), a72 = fv('m-a72');
+            if (a24 !== null) row.actual_24h = a24;
+            if (a48 !== null) row.actual_48h = a48;
+            if (a72 !== null) row.actual_72h = a72;
+
+            const temp = fv('m-temp'), hum = fv('m-hum'), wind = fv('m-wind'), aod = fv('m-aod');
+            if (temp !== null) row.temp_c = temp;
+            if (hum !== null) row.humidity = hum;
+            if (wind !== null) row.wind_speed = wind;
+            if (aod !== null) row.aod = aod;
+
+            queue.push(row);
+            renderQueue();
+        }
+
+        function renderQueue() {
+            const el = g('rowsList');
+            g('queueCount').textContent = queue.length;
+            g('runBtn').disabled = queue.length === 0;
+            g('runHint').textContent = queue.length === 0 ? 'Add at least 1 row to run' : `${queue.length} row${queue.length > 1 ? 's' : ''} ready`;
+
+            if (queue.length === 0) { el.innerHTML = '<div class="empty-rows">No rows added yet.</div>'; return; }
+            el.innerHTML = queue.map((r, i) => `
+    <div class="row-item">
+      <div>
+        <span class="coords">(${r.lat}°, ${r.lon}°)</span>
+        <span class="pms" style="margin-left:12px">today=${r.pm_today} → ${r.pm_1d}, ${r.pm_2d}, ${r.pm_3d} µg/m³</span>
+        ${r.actual_24h !== undefined ? `<span style="margin-left:10px;font-size:10px;color:var(--accent2)">✓ actuals</span>` : ''}
+      </div>
+      <button class="del" onclick="removeRow(${i})">✕</button>
+    </div>`).join('');
+        }
+
+        function removeRow(i) { queue.splice(i, 1); renderQueue(); }
+        function clearQueue() { queue = []; renderQueue(); }
+
+        // ── CSV Parse ─────────────────────────────────────────────────────────────────
+        function handleCSV(evt) {
+            const file = evt.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const lines = e.target.result.trim().split('\n');
+                const headers = lines[0].split(',').map(h => h.trim());
+                const parsed = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const vals = lines[i].split(',').map(v => v.trim());
+                    const row = {};
+                    headers.forEach((h, j) => { if (vals[j] !== '' && vals[j] !== undefined) row[h] = parseFloat(vals[j]); });
+                    if (row.lat && row.lon && row.pm_today && row.pm_1d) {
+                        // normalize column names
+                        if (row.pm_2d === undefined && row['pm_2d'] === undefined) continue;
+                        parsed.push(row);
+                    }
+                }
+                queue = parsed;
+                renderQueue();
+                g('csvStatus').innerHTML = `<div class="status-bar success">✅ Loaded ${parsed.length} rows from ${file.name}</div>`;
+            };
+            reader.readAsText(file);
+        }
+
+        // ── Evaluate ──────────────────────────────────────────────────────────────────
+        async function runEvaluation() {
+            if (queue.length === 0) return;
+            const btn = g('runBtn');
+            btn.disabled = true; btn.textContent = '⏳ Evaluating...';
+            showStatus('loading', `⏳ Running XGBoost evaluation on ${queue.length} row${queue.length > 1 ? 's' : ''}...`);
+            g('resultsSection').style.display = 'none';
+
+            try {
+                const res = await fetch(`${API}/evaluate`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rows: queue })
+                });
+                const data = await res.json();
+                lastResults = data;
+                showStatus('success', `✅ Evaluation complete — ${data.results.length} predictions generated`);
+                renderResults(data);
+                g('resultsSection').style.display = 'block';
+            } catch (e) {
+                showStatus('error', '❌ API offline — make sure python3 api.py is running on port 5050');
+            }
+            btn.disabled = false; btn.textContent = '⚡ Run Evaluation';
+        }
+
+        function showStatus(type, msg) {
+            const el = g('statusBar');
+            el.style.display = 'flex';
+            el.className = `status-bar ${type}`;
+            el.textContent = msg;
+        }
+
+        // ── Render Results ────────────────────────────────────────────────────────────
+        function renderResults(data) {
+            const hasActuals = data.results.some(r => r.actual_24h !== undefined);
+
+            // Metrics
+            if (Object.keys(data.metrics).length > 0) {
+                g('metricsCard').style.display = 'block';
+                const labels = { '24h': '+24h Forecast', '48h': '+48h Forecast', '72h': '+72h Forecast' };
+                g('metricsGrid').innerHTML = ['24h', '48h', '72h'].map(h => {
+                    const m = data.metrics[h];
+                    if (!m) return '';
+                    const r2c = m.r2 >= 0.9 ? '#22c55e' : m.r2 >= 0.75 ? '#fb923c' : '#ef4444';
+                    const badge = m.r2 >= 0.9 ? 'badge-ok' : m.r2 >= 0.75 ? 'badge-warn' : 'badge-bad';
+                    const verdict = m.r2 >= 0.9 ? '✅ Excellent' : m.r2 >= 0.75 ? '⚠️ Good' : '❌ Needs Improvement';
+                    return `<div class="metric-card">
+        <div class="horizon">${labels[h]}</div>
+        <div class="r2" style="color:${r2c}">${m.r2.toFixed(3)}</div>
+        <div class="sub">R² score (${m.n} samples)</div>
+        <div class="sub" style="margin-top:6px">RMSE: <strong>${m.rmse} µg/m³</strong> &nbsp; MAE: <strong>${m.mae} µg/m³</strong></div>
+        <div class="badge ${badge}" style="margin-top:8px">${verdict}</div>
+      </div>`;
+                }).join('');
+            } else {
+                g('metricsCard').style.display = 'none';
+            }
+
+            // Table headers
+            const horizons = ['24h', '48h', '72h'];
+            let headHtml = '<th>#</th><th>Lat</th><th>Lon</th><th>Today (µg/m³)</th>';
+            horizons.forEach(h => {
+                headHtml += `<th>Pred +${h}</th><th>Category</th>`;
+                if (hasActuals) headHtml += `<th>Actual +${h}</th><th>Error</th>`;
+            });
+            g('resultHead').innerHTML = headHtml;
+
+            // Table rows
+            g('resultBody').innerHTML = data.results.map((r, i) => {
+                let html = `<td>${i + 1}</td><td>${r.lat}°</td><td>${r.lon}°</td><td class="val">${r.pm_today}</td>`;
+                horizons.forEach(h => {
+                    const f = r.forecasts[h];
+                    html += `<td class="val" style="color:${f.color}">${f.pm25}</td>`;
+                    html += `<td><span class="status-dot" style="background:${f.color}"></span>${f.label}</td>`;
+                    if (hasActuals) {
+                        const actual = r[`actual_${h}`];
+                        const err = r[`err_${h}`];
+                        if (actual !== undefined) {
+                            const errClass = err < 10 ? 'err-low' : err < 25 ? 'err-med' : 'err-high';
+                            html += `<td>${actual}</td><td class="${errClass} val">±${err}</td>`;
+                        } else {
+                            html += `<td class="err-na">—</td><td class="err-na">—</td>`;
+                        }
+                    }
+                });
+                return `<tr>${html}</tr>`;
+            }).join('');
+        }
+
+        // ── Export ────────────────────────────────────────────────────────────────────
+        function exportCSV() {
+            if (!lastResults) return;
+            const rows = lastResults.results;
+            const hasActuals = rows.some(r => r.actual_24h !== undefined);
+            let headers = ['lat', 'lon', 'pm_today', 'pred_24h', 'label_24h', 'pred_48h', 'label_48h', 'pred_72h', 'label_72h'];
+            if (hasActuals) headers = headers.concat(['actual_24h', 'err_24h', 'actual_48h', 'err_48h', 'actual_72h', 'err_72h']);
+            const lines = [headers.join(',')];
+            rows.forEach(r => {
+                const vals = [r.lat, r.lon, r.pm_today,
+                r.forecasts['24h'].pm25, r.forecasts['24h'].label,
+                r.forecasts['48h'].pm25, r.forecasts['48h'].label,
+                r.forecasts['72h'].pm25, r.forecasts['72h'].label,
+                ];
+                if (hasActuals) vals.push(r.actual_24h ?? '', r.err_24h ?? '', r.actual_48h ?? '', r.err_48h ?? '', r.actual_72h ?? '', r.err_72h ?? '');
+                lines.push(vals.join(','));
+            });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
+            a.download = 'airsight_evaluation_results.csv';
+            a.click();
+        }
+    </script>
+</body>
+
+</html>
