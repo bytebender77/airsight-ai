@@ -21,14 +21,21 @@ CSV_PATH     = os.path.join(PROJECT_ROOT, 'data', 'final_land_dataset.csv')
 
 # Load full dataset into memory at startup for fast /snapshot queries
 print("📂 Loading full dataset for time slider...")
+_DF = None
+_MONTHS = []
+
 try:
-    _DF = pd.read_csv(CSV_PATH, usecols=['lat','lon','year','month','pm25'])
-    _DF['pm25'] = pd.to_numeric(_DF['pm25'], errors='coerce')
-    _DF = _DF.dropna(subset=['pm25'])
-    _DF['pm25'] = _DF['pm25'].clip(0, 999).round(2)
-    # Available months meta
-    _MONTHS = sorted(_DF[['year','month']].drop_duplicates().values.tolist())
-    print(f"✅ Dataset loaded: {len(_DF)} rows, {len(_MONTHS)} months ({_MONTHS[0]} → {_MONTHS[-1]})")
+    if os.path.exists(CSV_PATH):
+        # Use low_memory=False for speed on Render
+        _DF = pd.read_csv(CSV_PATH, usecols=['lat','lon','year','month','pm25'], low_memory=False)
+        _DF['pm25'] = pd.to_numeric(_DF['pm25'], errors='coerce')
+        _DF = _DF.dropna(subset=['pm25'])
+        _DF['pm25'] = _DF['pm25'].clip(0, 999).round(2)
+        # Available months meta
+        _MONTHS = sorted(_DF[['year','month']].drop_duplicates().values.tolist())
+        print(f"✅ Dataset loaded: {len(_DF)} rows, {len(_MONTHS)} months ({_MONTHS[0]} → {_MONTHS[-1]})")
+    else:
+        print(f"❌ CSV File not found at {CSV_PATH}")
 except Exception as e:
     print(f"⚠️  Could not load full dataset ({e}). /snapshot will be unavailable.")
     _DF = None
