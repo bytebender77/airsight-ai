@@ -1,0 +1,985 @@
+Region,Year,predicted_severity
+Afghanistan,2021,Critical
+Afghanistan,2022,Sensitive
+Afghanistan,2023,Critical
+Afghanistan,2024,Critical
+Akrotiri and Dhekelia,2021,Moderate
+Akrotiri and Dhekelia,2022,Moderate
+Akrotiri and Dhekelia,2023,Moderate
+Akrotiri and Dhekelia,2024,Sensitive
+Aland,2021,Good
+Aland,2022,Good
+Aland,2023,Good
+Aland,2024,Good
+Albania,2021,Moderate
+Albania,2022,Sensitive
+Albania,2023,Sensitive
+Albania,2024,Sensitive
+Algeria,2021,Sensitive
+Algeria,2022,Sensitive
+Algeria,2023,Sensitive
+Algeria,2024,Sensitive
+American Samoa,2021,Good
+American Samoa,2022,Good
+American Samoa,2023,Good
+American Samoa,2024,Good
+Andorra,2021,Moderate
+Andorra,2022,Moderate
+Andorra,2023,Moderate
+Andorra,2024,Moderate
+Angola,2021,Sensitive
+Angola,2022,Sensitive
+Angola,2023,Sensitive
+Angola,2024,Sensitive
+Anguilla,2021,Moderate
+Anguilla,2022,Moderate
+Anguilla,2023,Moderate
+Anguilla,2024,Moderate
+Antigua and Barbuda,2021,Moderate
+Antigua and Barbuda,2022,Moderate
+Antigua and Barbuda,2023,Moderate
+Antigua and Barbuda,2024,Moderate
+Argentina,2021,Sensitive
+Argentina,2022,Sensitive
+Argentina,2023,Sensitive
+Argentina,2024,Sensitive
+Armenia,2021,Sensitive
+Armenia,2022,Sensitive
+Armenia,2023,Sensitive
+Armenia,2024,Sensitive
+Aruba,2021,Moderate
+Aruba,2022,Moderate
+Aruba,2023,Moderate
+Aruba,2024,Moderate
+Australia,2021,Good
+Australia,2022,Good
+Australia,2023,Good
+Australia,2024,Good
+Austria,2021,Moderate
+Austria,2022,Moderate
+Austria,2023,Moderate
+Austria,2024,Moderate
+Azerbaijan,2021,Sensitive
+Azerbaijan,2022,Sensitive
+Azerbaijan,2023,Sensitive
+Azerbaijan,2024,Sensitive
+Bahamas,2021,Moderate
+Bahamas,2022,Moderate
+Bahamas,2023,Moderate
+Bahamas,2024,Moderate
+Bahrain,2021,Critical
+Bahrain,2022,Critical
+Bahrain,2023,Critical
+Bahrain,2024,Critical
+Bangladesh,2021,Critical
+Bangladesh,2022,Critical
+Bangladesh,2023,Critical
+Bangladesh,2024,Critical
+Barbados,2021,Moderate
+Barbados,2022,Moderate
+Barbados,2023,Moderate
+Barbados,2024,Moderate
+Belarus,2021,Moderate
+Belarus,2022,Moderate
+Belarus,2023,Moderate
+Belarus,2024,Moderate
+Belgium,2021,Moderate
+Belgium,2022,Moderate
+Belgium,2023,Moderate
+Belgium,2024,Moderate
+Belize,2021,Moderate
+Belize,2022,Moderate
+Belize,2023,Moderate
+Belize,2024,Sensitive
+Benin,2021,Critical
+Benin,2022,Critical
+Benin,2023,Critical
+Benin,2024,Critical
+Bermuda,2021,Good
+Bermuda,2022,Good
+Bermuda,2023,Moderate
+Bermuda,2024,Good
+Bhutan,2021,Sensitive
+Bhutan,2022,Sensitive
+Bhutan,2023,Sensitive
+Bhutan,2024,Sensitive
+Bolivia,2021,Sensitive
+Bolivia,2022,Sensitive
+Bolivia,2023,Sensitive
+Bolivia,2024,Critical
+Bonaire; Sint Eustatius and Saba,2021,Moderate
+Bonaire; Sint Eustatius and Saba,2022,Moderate
+Bonaire; Sint Eustatius and Saba,2023,Moderate
+Bonaire; Sint Eustatius and Saba,2024,Moderate
+Bosnia and Herzegovina,2021,Sensitive
+Bosnia and Herzegovina,2022,Sensitive
+Bosnia and Herzegovina,2023,Sensitive
+Bosnia and Herzegovina,2024,Sensitive
+Botswana,2021,Moderate
+Botswana,2022,Moderate
+Botswana,2023,Sensitive
+Botswana,2024,Sensitive
+Brazil,2021,Sensitive
+Brazil,2022,Sensitive
+Brazil,2023,Sensitive
+Brazil,2024,Sensitive
+British Virgin Islands,2021,Moderate
+British Virgin Islands,2022,Moderate
+British Virgin Islands,2023,Moderate
+British Virgin Islands,2024,Moderate
+Brunei,2021,Moderate
+Brunei,2022,Moderate
+Brunei,2023,Moderate
+Brunei,2024,Moderate
+Bulgaria,2021,Sensitive
+Bulgaria,2022,Sensitive
+Bulgaria,2023,Sensitive
+Bulgaria,2024,Sensitive
+Burkina Faso,2021,Sensitive
+Burkina Faso,2022,Critical
+Burkina Faso,2023,Sensitive
+Burkina Faso,2024,Sensitive
+Burundi,2021,Critical
+Burundi,2022,Critical
+Burundi,2023,Sensitive
+Burundi,2024,Critical
+Cambodia,2021,Sensitive
+Cambodia,2022,Sensitive
+Cambodia,2023,Sensitive
+Cambodia,2024,Sensitive
+Cameroon,2021,Critical
+Cameroon,2022,Critical
+Cameroon,2023,Critical
+Cameroon,2024,Critical
+Canada,2021,Good
+Canada,2022,Good
+Canada,2023,Moderate
+Canada,2024,Moderate
+Cape Verde,2021,Sensitive
+Cape Verde,2022,Moderate
+Cape Verde,2023,Sensitive
+Cape Verde,2024,Sensitive
+Caspian Sea,2021,Sensitive
+Caspian Sea,2022,Sensitive
+Caspian Sea,2023,Sensitive
+Caspian Sea,2024,Sensitive
+Cayman Islands,2021,Moderate
+Cayman Islands,2022,Moderate
+Cayman Islands,2023,Sensitive
+Cayman Islands,2024,Moderate
+Central African Republic,2021,Sensitive
+Central African Republic,2022,Sensitive
+Central African Republic,2023,Sensitive
+Central African Republic,2024,Sensitive
+Chad,2021,Sensitive
+Chad,2022,Sensitive
+Chad,2023,Sensitive
+Chad,2024,Sensitive
+Chile,2021,Sensitive
+Chile,2022,Sensitive
+Chile,2023,Sensitive
+Chile,2024,Sensitive
+China,2021,Sensitive
+China,2022,Sensitive
+China,2023,Sensitive
+China,2024,Sensitive
+Christmas Island,2021,Good
+Christmas Island,2022,Good
+Christmas Island,2023,Good
+Christmas Island,2024,Good
+Cocos Islands,2021,Good
+Cocos Islands,2022,Good
+Cocos Islands,2023,Good
+Cocos Islands,2024,Good
+Colombia,2021,Sensitive
+Colombia,2022,Sensitive
+Colombia,2023,Moderate
+Colombia,2024,Sensitive
+Comoros,2021,Moderate
+Comoros,2022,Moderate
+Comoros,2023,Moderate
+Comoros,2024,Moderate
+Cook Islands,2021,Good
+Cook Islands,2022,Good
+Cook Islands,2023,Good
+Cook Islands,2024,Good
+Costa Rica,2021,Sensitive
+Costa Rica,2022,Sensitive
+Costa Rica,2023,Sensitive
+Costa Rica,2024,Sensitive
+Croatia,2021,Moderate
+Croatia,2022,Moderate
+Croatia,2023,Moderate
+Croatia,2024,Moderate
+Cuba,2021,Moderate
+Cuba,2022,Moderate
+Cuba,2023,Moderate
+Cuba,2024,Moderate
+Curaçao,2021,Moderate
+Curaçao,2022,Moderate
+Curaçao,2023,Moderate
+Curaçao,2024,Moderate
+Cyprus,2021,Sensitive
+Cyprus,2022,Sensitive
+Cyprus,2023,Sensitive
+Cyprus,2024,Sensitive
+Czech Republic,2021,Moderate
+Czech Republic,2022,Moderate
+Czech Republic,2023,Moderate
+Czech Republic,2024,Moderate
+Côte d'Ivoire,2021,Sensitive
+Côte d'Ivoire,2022,Sensitive
+Côte d'Ivoire,2023,Sensitive
+Côte d'Ivoire,2024,Sensitive
+Democratic Republic of the Congo,2021,Critical
+Democratic Republic of the Congo,2022,Critical
+Democratic Republic of the Congo,2023,Sensitive
+Democratic Republic of the Congo,2024,Critical
+Denmark,2021,Moderate
+Denmark,2022,Moderate
+Denmark,2023,Moderate
+Denmark,2024,Moderate
+Djibouti,2021,Sensitive
+Djibouti,2022,Sensitive
+Djibouti,2023,Sensitive
+Djibouti,2024,Sensitive
+Dominica,2021,Moderate
+Dominica,2022,Moderate
+Dominica,2023,Moderate
+Dominica,2024,Moderate
+Dominican Republic,2021,Moderate
+Dominican Republic,2022,Moderate
+Dominican Republic,2023,Moderate
+Dominican Republic,2024,Moderate
+Ecuador,2021,Moderate
+Ecuador,2022,Sensitive
+Ecuador,2023,Moderate
+Ecuador,2024,Sensitive
+Egypt,2021,Sensitive
+Egypt,2022,Sensitive
+Egypt,2023,Sensitive
+Egypt,2024,Sensitive
+El Salvador,2021,Sensitive
+El Salvador,2022,Sensitive
+El Salvador,2023,Sensitive
+El Salvador,2024,Sensitive
+Equatorial Guinea,2021,Sensitive
+Equatorial Guinea,2022,Sensitive
+Equatorial Guinea,2023,Sensitive
+Equatorial Guinea,2024,Critical
+Eritrea,2021,Sensitive
+Eritrea,2022,Sensitive
+Eritrea,2023,Sensitive
+Eritrea,2024,Sensitive
+Estonia,2021,Moderate
+Estonia,2022,Moderate
+Estonia,2023,Moderate
+Estonia,2024,Moderate
+Ethiopia,2021,Sensitive
+Ethiopia,2022,Sensitive
+Ethiopia,2023,Sensitive
+Ethiopia,2024,Sensitive
+Falkland Islands,2021,Moderate
+Falkland Islands,2022,Moderate
+Falkland Islands,2023,Moderate
+Falkland Islands,2024,Moderate
+Faroe Islands,2021,Good
+Faroe Islands,2022,Good
+Faroe Islands,2023,Good
+Faroe Islands,2024,Good
+Fiji,2021,Good
+Fiji,2022,Moderate
+Fiji,2023,Moderate
+Fiji,2024,Moderate
+Finland,2021,Good
+Finland,2022,Good
+Finland,2023,Good
+Finland,2024,Good
+France,2021,Moderate
+France,2022,Moderate
+France,2023,Moderate
+France,2024,Moderate
+French Guiana,2021,Moderate
+French Guiana,2022,Moderate
+French Guiana,2023,Moderate
+French Guiana,2024,Moderate
+French Polynesia,2021,Good
+French Polynesia,2022,Good
+French Polynesia,2023,Good
+French Polynesia,2024,Good
+Gabon,2021,Sensitive
+Gabon,2022,Sensitive
+Gabon,2023,Sensitive
+Gabon,2024,Sensitive
+Gambia,2021,Critical
+Gambia,2022,Sensitive
+Gambia,2023,Sensitive
+Gambia,2024,Sensitive
+Georgia,2021,Sensitive
+Georgia,2022,Sensitive
+Georgia,2023,Sensitive
+Georgia,2024,Sensitive
+Germany,2021,Moderate
+Germany,2022,Moderate
+Germany,2023,Moderate
+Germany,2024,Moderate
+Ghana,2021,Sensitive
+Ghana,2022,Sensitive
+Ghana,2023,Sensitive
+Ghana,2024,Sensitive
+Gibraltar,2021,Moderate
+Gibraltar,2022,Moderate
+Gibraltar,2023,Moderate
+Gibraltar,2024,Moderate
+Greece,2021,Moderate
+Greece,2022,Moderate
+Greece,2023,Moderate
+Greece,2024,Moderate
+Greenland,2021,Good
+Greenland,2022,Good
+Greenland,2023,Good
+Greenland,2024,Good
+Grenada,2021,Moderate
+Grenada,2022,Moderate
+Grenada,2023,Moderate
+Grenada,2024,Moderate
+Guadeloupe,2021,Moderate
+Guadeloupe,2022,Moderate
+Guadeloupe,2023,Moderate
+Guadeloupe,2024,Moderate
+Guam,2021,Good
+Guam,2022,Good
+Guam,2023,Good
+Guam,2024,Good
+Guatemala,2021,Sensitive
+Guatemala,2022,Sensitive
+Guatemala,2023,Sensitive
+Guatemala,2024,Sensitive
+Guernsey,2021,Moderate
+Guernsey,2022,Moderate
+Guernsey,2023,Moderate
+Guernsey,2024,Moderate
+Guinea,2021,Sensitive
+Guinea,2022,Sensitive
+Guinea,2023,Sensitive
+Guinea,2024,Sensitive
+Guinea-Bissau,2021,Sensitive
+Guinea-Bissau,2022,Sensitive
+Guinea-Bissau,2023,Sensitive
+Guinea-Bissau,2024,Sensitive
+Guyana,2021,Moderate
+Guyana,2022,Moderate
+Guyana,2023,Moderate
+Guyana,2024,Moderate
+Haiti,2021,Moderate
+Haiti,2022,Moderate
+Haiti,2023,Moderate
+Haiti,2024,Moderate
+Honduras,2021,Sensitive
+Honduras,2022,Sensitive
+Honduras,2023,Sensitive
+Honduras,2024,Sensitive
+Hong Kong,2021,Sensitive
+Hong Kong,2022,Moderate
+Hong Kong,2023,Sensitive
+Hong Kong,2024,Sensitive
+Hungary,2021,Moderate
+Hungary,2022,Moderate
+Hungary,2023,Moderate
+Hungary,2024,Moderate
+Iceland,2021,Good
+Iceland,2022,Good
+Iceland,2023,Good
+Iceland,2024,Good
+India,2021,Critical
+India,2022,Critical
+India,2023,Critical
+India,2024,Critical
+Indonesia,2021,Moderate
+Indonesia,2022,Moderate
+Indonesia,2023,Moderate
+Indonesia,2024,Moderate
+Iran,2021,Critical
+Iran,2022,Critical
+Iran,2023,Critical
+Iran,2024,Critical
+Iraq,2021,Critical
+Iraq,2022,Critical
+Iraq,2023,Critical
+Iraq,2024,Critical
+Ireland,2021,Moderate
+Ireland,2022,Moderate
+Ireland,2023,Moderate
+Ireland,2024,Moderate
+Isle of Man,2021,Moderate
+Isle of Man,2022,Moderate
+Isle of Man,2023,Moderate
+Isle of Man,2024,Moderate
+Israel,2021,Sensitive
+Israel,2022,Sensitive
+Israel,2023,Sensitive
+Israel,2024,Sensitive
+Italy,2021,Moderate
+Italy,2022,Moderate
+Italy,2023,Moderate
+Italy,2024,Moderate
+Jamaica,2021,Sensitive
+Jamaica,2022,Sensitive
+Jamaica,2023,Sensitive
+Jamaica,2024,Sensitive
+Japan,2021,Moderate
+Japan,2022,Moderate
+Japan,2023,Moderate
+Japan,2024,Moderate
+Jersey,2021,Moderate
+Jersey,2022,Moderate
+Jersey,2023,Moderate
+Jersey,2024,Moderate
+Jordan,2021,Sensitive
+Jordan,2022,Sensitive
+Jordan,2023,Sensitive
+Jordan,2024,Sensitive
+Kazakhstan,2021,Moderate
+Kazakhstan,2022,Moderate
+Kazakhstan,2023,Moderate
+Kazakhstan,2024,Moderate
+Kenya,2021,Sensitive
+Kenya,2022,Sensitive
+Kenya,2023,Moderate
+Kenya,2024,Sensitive
+Kiribati,2021,Good
+Kiribati,2022,Good
+Kiribati,2023,Good
+Kiribati,2024,Good
+Kosovo,2021,Sensitive
+Kosovo,2022,Sensitive
+Kosovo,2023,Sensitive
+Kosovo,2024,Sensitive
+Kuwait,2021,Critical
+Kuwait,2022,Critical
+Kuwait,2023,Critical
+Kuwait,2024,Critical
+Kyrgyzstan,2021,Sensitive
+Kyrgyzstan,2022,Sensitive
+Kyrgyzstan,2023,Sensitive
+Kyrgyzstan,2024,Sensitive
+Laos,2021,Sensitive
+Laos,2022,Sensitive
+Laos,2023,Sensitive
+Laos,2024,Sensitive
+Latvia,2021,Moderate
+Latvia,2022,Moderate
+Latvia,2023,Moderate
+Latvia,2024,Moderate
+Lebanon,2021,Sensitive
+Lebanon,2022,Sensitive
+Lebanon,2023,Sensitive
+Lebanon,2024,Sensitive
+Lesotho,2021,Sensitive
+Lesotho,2022,Sensitive
+Lesotho,2023,Sensitive
+Lesotho,2024,Sensitive
+Liberia,2021,Moderate
+Liberia,2022,Sensitive
+Liberia,2023,Moderate
+Liberia,2024,Sensitive
+Libya,2021,Sensitive
+Libya,2022,Sensitive
+Libya,2023,Sensitive
+Libya,2024,Sensitive
+Liechtenstein,2021,Moderate
+Liechtenstein,2022,Moderate
+Liechtenstein,2023,Moderate
+Liechtenstein,2024,Moderate
+Lithuania,2021,Moderate
+Lithuania,2022,Moderate
+Lithuania,2023,Moderate
+Lithuania,2024,Moderate
+Luxembourg,2021,Moderate
+Luxembourg,2022,Moderate
+Luxembourg,2023,Moderate
+Luxembourg,2024,Moderate
+Macao,2021,Sensitive
+Macao,2022,Sensitive
+Macao,2023,Sensitive
+Macao,2024,Sensitive
+Macedonia,2021,Sensitive
+Macedonia,2022,Sensitive
+Macedonia,2023,Sensitive
+Macedonia,2024,Sensitive
+Madagascar,2021,Moderate
+Madagascar,2022,Moderate
+Madagascar,2023,Moderate
+Madagascar,2024,Moderate
+Malawi,2021,Sensitive
+Malawi,2022,Sensitive
+Malawi,2023,Sensitive
+Malawi,2024,Sensitive
+Malaysia,2021,Moderate
+Malaysia,2022,Moderate
+Malaysia,2023,Moderate
+Malaysia,2024,Moderate
+Maldives,2021,Moderate
+Maldives,2022,Moderate
+Maldives,2023,Moderate
+Maldives,2024,Moderate
+Mali,2021,Sensitive
+Mali,2022,Sensitive
+Mali,2023,Sensitive
+Mali,2024,Sensitive
+Malta,2021,Moderate
+Malta,2022,Moderate
+Malta,2023,Moderate
+Malta,2024,Moderate
+Marshall Islands,2021,Good
+Marshall Islands,2022,Good
+Marshall Islands,2023,Good
+Marshall Islands,2024,Good
+Martinique,2021,Moderate
+Martinique,2022,Moderate
+Martinique,2023,Moderate
+Martinique,2024,Moderate
+Mauritania,2021,Sensitive
+Mauritania,2022,Sensitive
+Mauritania,2023,Sensitive
+Mauritania,2024,Sensitive
+Mauritius,2021,Moderate
+Mauritius,2022,Moderate
+Mauritius,2023,Moderate
+Mauritius,2024,Moderate
+Mayotte,2021,Moderate
+Mayotte,2022,Moderate
+Mayotte,2023,Moderate
+Mayotte,2024,Moderate
+Mexico,2021,Moderate
+Mexico,2022,Moderate
+Mexico,2023,Moderate
+Mexico,2024,Moderate
+Micronesia,2021,Good
+Micronesia,2022,Good
+Micronesia,2023,Good
+Micronesia,2024,Good
+Moldova,2021,Moderate
+Moldova,2022,Moderate
+Moldova,2023,Moderate
+Moldova,2024,Moderate
+Monaco,2021,Moderate
+Monaco,2022,Moderate
+Monaco,2023,Moderate
+Monaco,2024,Moderate
+Mongolia,2021,Moderate
+Mongolia,2022,Moderate
+Mongolia,2023,Moderate
+Mongolia,2024,Moderate
+Montenegro,2021,Sensitive
+Montenegro,2022,Sensitive
+Montenegro,2023,Sensitive
+Montenegro,2024,Sensitive
+Montserrat,2021,Moderate
+Montserrat,2022,Moderate
+Montserrat,2023,Moderate
+Montserrat,2024,Moderate
+Morocco,2021,Sensitive
+Morocco,2022,Sensitive
+Morocco,2023,Moderate
+Morocco,2024,Sensitive
+Mozambique,2021,Moderate
+Mozambique,2022,Sensitive
+Mozambique,2023,Sensitive
+Mozambique,2024,Sensitive
+Myanmar,2021,Sensitive
+Myanmar,2022,Sensitive
+Myanmar,2023,Sensitive
+Myanmar,2024,Sensitive
+Namibia,2021,Moderate
+Namibia,2022,Moderate
+Namibia,2023,Moderate
+Namibia,2024,Moderate
+Nauru,2021,Good
+Nauru,2022,Good
+Nauru,2023,Good
+Nauru,2024,Good
+Nepal,2021,Sensitive
+Nepal,2022,Sensitive
+Nepal,2023,Sensitive
+Nepal,2024,Sensitive
+Netherlands,2021,Moderate
+Netherlands,2022,Moderate
+Netherlands,2023,Moderate
+Netherlands,2024,Moderate
+New Caledonia,2021,Moderate
+New Caledonia,2022,Moderate
+New Caledonia,2023,Moderate
+New Caledonia,2024,Moderate
+New Zealand,2021,Moderate
+New Zealand,2022,Moderate
+New Zealand,2023,Moderate
+New Zealand,2024,Moderate
+Nicaragua,2021,Sensitive
+Nicaragua,2022,Sensitive
+Nicaragua,2023,Sensitive
+Nicaragua,2024,Sensitive
+Niger,2021,Critical
+Niger,2022,Critical
+Niger,2023,Critical
+Niger,2024,Critical
+Nigeria,2021,Critical
+Nigeria,2022,Critical
+Nigeria,2023,Critical
+Nigeria,2024,Critical
+Niue,2021,Good
+Niue,2022,Good
+Niue,2023,Good
+Niue,2024,Good
+Norfolk Island,2021,Good
+Norfolk Island,2022,Good
+Norfolk Island,2023,Good
+Norfolk Island,2024,Good
+North Korea,2021,Sensitive
+North Korea,2022,Sensitive
+North Korea,2023,Sensitive
+North Korea,2024,Sensitive
+Northern Cyprus,2021,Moderate
+Northern Cyprus,2022,Sensitive
+Northern Cyprus,2023,Sensitive
+Northern Cyprus,2024,Sensitive
+Northern Mariana Islands,2021,Good
+Northern Mariana Islands,2022,Good
+Northern Mariana Islands,2023,Good
+Northern Mariana Islands,2024,Good
+Norway,2021,Moderate
+Norway,2022,Good
+Norway,2023,Moderate
+Norway,2024,Moderate
+Oman,2021,Critical
+Oman,2022,Critical
+Oman,2023,Critical
+Oman,2024,Critical
+Pakistan,2021,Critical
+Pakistan,2022,Critical
+Pakistan,2023,Critical
+Pakistan,2024,Critical
+Palau,2021,Good
+Palau,2022,Good
+Palau,2023,Good
+Palau,2024,Good
+Palestina,2021,Sensitive
+Palestina,2022,Sensitive
+Palestina,2023,Sensitive
+Palestina,2024,Sensitive
+Panama,2021,Moderate
+Panama,2022,Moderate
+Panama,2023,Moderate
+Panama,2024,Moderate
+Papua New Guinea,2021,Moderate
+Papua New Guinea,2022,Moderate
+Papua New Guinea,2023,Moderate
+Papua New Guinea,2024,Moderate
+Paracel Islands,2021,Moderate
+Paracel Islands,2022,Moderate
+Paracel Islands,2023,Moderate
+Paracel Islands,2024,Moderate
+Paraguay,2021,Sensitive
+Paraguay,2022,Sensitive
+Paraguay,2023,Sensitive
+Paraguay,2024,Sensitive
+Peru,2021,Sensitive
+Peru,2022,Sensitive
+Peru,2023,Sensitive
+Peru,2024,Sensitive
+Philippines,2021,Sensitive
+Philippines,2022,Sensitive
+Philippines,2023,Sensitive
+Philippines,2024,Sensitive
+Pitcairn Islands,2021,Good
+Pitcairn Islands,2022,Good
+Pitcairn Islands,2023,Good
+Pitcairn Islands,2024,Good
+Poland,2021,Sensitive
+Poland,2022,Sensitive
+Poland,2023,Moderate
+Poland,2024,Moderate
+Portugal,2021,Moderate
+Portugal,2022,Moderate
+Portugal,2023,Moderate
+Portugal,2024,Moderate
+Puerto Rico,2021,Moderate
+Puerto Rico,2022,Moderate
+Puerto Rico,2023,Moderate
+Puerto Rico,2024,Moderate
+Qatar,2021,Critical
+Qatar,2022,Critical
+Qatar,2023,Critical
+Qatar,2024,Critical
+Republic of Congo,2021,Critical
+Republic of Congo,2022,Critical
+Republic of Congo,2023,Sensitive
+Republic of Congo,2024,Critical
+Reunion,2021,Good
+Reunion,2022,Good
+Reunion,2023,Good
+Reunion,2024,Good
+Romania,2021,Moderate
+Romania,2022,Moderate
+Romania,2023,Moderate
+Romania,2024,Moderate
+Russia,2021,Moderate
+Russia,2022,Moderate
+Russia,2023,Moderate
+Russia,2024,Moderate
+Rwanda,2021,Critical
+Rwanda,2022,Critical
+Rwanda,2023,Sensitive
+Rwanda,2024,Critical
+Saint Helena,2021,Good
+Saint Helena,2022,Good
+Saint Helena,2023,Good
+Saint Helena,2024,Good
+Saint Kitts and Nevis,2021,Moderate
+Saint Kitts and Nevis,2022,Moderate
+Saint Kitts and Nevis,2023,Moderate
+Saint Kitts and Nevis,2024,Moderate
+Saint Lucia,2021,Moderate
+Saint Lucia,2022,Moderate
+Saint Lucia,2023,Moderate
+Saint Lucia,2024,Moderate
+Saint Pierre and Miquelon,2021,Good
+Saint Pierre and Miquelon,2022,Good
+Saint Pierre and Miquelon,2023,Moderate
+Saint Pierre and Miquelon,2024,Good
+Saint Vincent and the Grenadines,2021,Moderate
+Saint Vincent and the Grenadines,2022,Moderate
+Saint Vincent and the Grenadines,2023,Moderate
+Saint Vincent and the Grenadines,2024,Moderate
+Saint-Barthélemy,2021,Moderate
+Saint-Barthélemy,2022,Moderate
+Saint-Barthélemy,2023,Moderate
+Saint-Barthélemy,2024,Moderate
+Saint-Martin,2021,Moderate
+Saint-Martin,2022,Moderate
+Saint-Martin,2023,Moderate
+Saint-Martin,2024,Moderate
+Samoa,2021,Good
+Samoa,2022,Good
+Samoa,2023,Good
+Samoa,2024,Good
+San Marino,2021,Moderate
+San Marino,2022,Moderate
+San Marino,2023,Moderate
+San Marino,2024,Moderate
+Saudi Arabia,2021,Critical
+Saudi Arabia,2022,Critical
+Saudi Arabia,2023,Critical
+Saudi Arabia,2024,Critical
+Senegal,2021,Critical
+Senegal,2022,Sensitive
+Senegal,2023,Sensitive
+Senegal,2024,Sensitive
+Serbia,2021,Sensitive
+Serbia,2022,Sensitive
+Serbia,2023,Sensitive
+Serbia,2024,Sensitive
+Seychelles,2021,Moderate
+Seychelles,2022,Moderate
+Seychelles,2023,Moderate
+Seychelles,2024,Moderate
+Sierra Leone,2021,Sensitive
+Sierra Leone,2022,Sensitive
+Sierra Leone,2023,Sensitive
+Sierra Leone,2024,Sensitive
+Singapore,2021,Moderate
+Singapore,2022,Moderate
+Singapore,2023,Moderate
+Singapore,2024,Moderate
+Sint Maarten,2021,Moderate
+Sint Maarten,2022,Moderate
+Sint Maarten,2023,Moderate
+Sint Maarten,2024,Moderate
+Slovakia,2021,Sensitive
+Slovakia,2022,Moderate
+Slovakia,2023,Moderate
+Slovakia,2024,Moderate
+Slovenia,2021,Moderate
+Slovenia,2022,Moderate
+Slovenia,2023,Moderate
+Slovenia,2024,Moderate
+Solomon Islands,2021,Moderate
+Solomon Islands,2022,Moderate
+Solomon Islands,2023,Moderate
+Solomon Islands,2024,Moderate
+Somalia,2021,Moderate
+Somalia,2022,Moderate
+Somalia,2023,Moderate
+Somalia,2024,Moderate
+South Africa,2021,Moderate
+South Africa,2022,Sensitive
+South Africa,2023,Moderate
+South Africa,2024,Moderate
+South Korea,2021,Moderate
+South Korea,2022,Sensitive
+South Korea,2023,Sensitive
+South Korea,2024,Sensitive
+South Sudan,2021,Sensitive
+South Sudan,2022,Sensitive
+South Sudan,2023,Sensitive
+South Sudan,2024,Sensitive
+Spain,2021,Moderate
+Spain,2022,Moderate
+Spain,2023,Moderate
+Spain,2024,Moderate
+Sri Lanka,2021,Sensitive
+Sri Lanka,2022,Sensitive
+Sri Lanka,2023,Sensitive
+Sri Lanka,2024,Sensitive
+Sudan,2021,Sensitive
+Sudan,2022,Sensitive
+Sudan,2023,Sensitive
+Sudan,2024,Sensitive
+Suriname,2021,Moderate
+Suriname,2022,Moderate
+Suriname,2023,Moderate
+Suriname,2024,Moderate
+Swaziland,2021,Sensitive
+Swaziland,2022,Sensitive
+Swaziland,2023,Sensitive
+Swaziland,2024,Sensitive
+Sweden,2021,Good
+Sweden,2022,Good
+Sweden,2023,Good
+Sweden,2024,Good
+Switzerland,2021,Moderate
+Switzerland,2022,Moderate
+Switzerland,2023,Moderate
+Switzerland,2024,Moderate
+Syria,2021,Sensitive
+Syria,2022,Sensitive
+Syria,2023,Sensitive
+Syria,2024,Sensitive
+São Tomé and Príncipe,2021,Moderate
+São Tomé and Príncipe,2022,Moderate
+São Tomé and Príncipe,2023,Moderate
+São Tomé and Príncipe,2024,Sensitive
+Taiwan,2021,Moderate
+Taiwan,2022,Sensitive
+Taiwan,2023,Sensitive
+Taiwan,2024,Moderate
+Tajikistan,2021,Sensitive
+Tajikistan,2022,Sensitive
+Tajikistan,2023,Sensitive
+Tajikistan,2024,Sensitive
+Tanzania,2021,Sensitive
+Tanzania,2022,Sensitive
+Tanzania,2023,Sensitive
+Tanzania,2024,Sensitive
+Thailand,2021,Sensitive
+Thailand,2022,Sensitive
+Thailand,2023,Sensitive
+Thailand,2024,Sensitive
+Timor-Leste,2021,Moderate
+Timor-Leste,2022,Moderate
+Timor-Leste,2023,Moderate
+Timor-Leste,2024,Moderate
+Togo,2021,Sensitive
+Togo,2022,Sensitive
+Togo,2023,Sensitive
+Togo,2024,Sensitive
+Tokelau,2021,Good
+Tokelau,2022,Good
+Tokelau,2023,Good
+Tokelau,2024,Good
+Tonga,2021,Good
+Tonga,2022,Good
+Tonga,2023,Good
+Tonga,2024,Good
+Trinidad and Tobago,2021,Moderate
+Trinidad and Tobago,2022,Moderate
+Trinidad and Tobago,2023,Moderate
+Trinidad and Tobago,2024,Moderate
+Tunisia,2021,Sensitive
+Tunisia,2022,Sensitive
+Tunisia,2023,Sensitive
+Tunisia,2024,Sensitive
+Turkey,2021,Sensitive
+Turkey,2022,Sensitive
+Turkey,2023,Sensitive
+Turkey,2024,Sensitive
+Turkmenistan,2021,Sensitive
+Turkmenistan,2022,Sensitive
+Turkmenistan,2023,Sensitive
+Turkmenistan,2024,Sensitive
+Turks and Caicos Islands,2021,Moderate
+Turks and Caicos Islands,2022,Moderate
+Turks and Caicos Islands,2023,Moderate
+Turks and Caicos Islands,2024,Moderate
+Tuvalu,2021,Good
+Tuvalu,2022,Good
+Tuvalu,2023,Good
+Tuvalu,2024,Good
+Uganda,2021,Sensitive
+Uganda,2022,Sensitive
+Uganda,2023,Sensitive
+Uganda,2024,Critical
+Ukraine,2021,Moderate
+Ukraine,2022,Moderate
+Ukraine,2023,Moderate
+Ukraine,2024,Moderate
+United Arab Emirates,2021,Critical
+United Arab Emirates,2022,Critical
+United Arab Emirates,2023,Critical
+United Arab Emirates,2024,Critical
+United Kingdom,2021,Moderate
+United Kingdom,2022,Moderate
+United Kingdom,2023,Moderate
+United Kingdom,2024,Moderate
+United States,2021,Moderate
+United States,2022,Moderate
+United States,2023,Moderate
+United States,2024,Moderate
+Uruguay,2021,Moderate
+Uruguay,2022,Moderate
+Uruguay,2023,Moderate
+Uruguay,2024,Moderate
+Uzbekistan,2021,Sensitive
+Uzbekistan,2022,Sensitive
+Uzbekistan,2023,Sensitive
+Uzbekistan,2024,Sensitive
+Vanuatu,2021,Good
+Vanuatu,2022,Moderate
+Vanuatu,2023,Moderate
+Vanuatu,2024,Moderate
+Vatican City,2021,Moderate
+Vatican City,2022,Sensitive
+Vatican City,2023,Moderate
+Vatican City,2024,Moderate
+Venezuela,2021,Moderate
+Venezuela,2022,Moderate
+Venezuela,2023,Moderate
+Venezuela,2024,Moderate
+Vietnam,2021,Sensitive
+Vietnam,2022,Sensitive
+Vietnam,2023,Sensitive
+Vietnam,2024,Sensitive
+Virgin Islands; U.S.,2021,Moderate
+Virgin Islands; U.S.,2022,Moderate
+Virgin Islands; U.S.,2023,Moderate
+Virgin Islands; U.S.,2024,Moderate
+Wallis and Futuna,2021,Good
+Wallis and Futuna,2022,Good
+Wallis and Futuna,2023,Good
+Wallis and Futuna,2024,Good
+Western Sahara,2021,Sensitive
+Western Sahara,2022,Sensitive
+Western Sahara,2023,Sensitive
+Western Sahara,2024,Sensitive
+Yemen,2021,Critical
+Yemen,2022,Critical
+Yemen,2023,Sensitive
+Yemen,2024,Critical
+Zambia,2021,Sensitive
+Zambia,2022,Sensitive
+Zambia,2023,Sensitive
+Zambia,2024,Sensitive
+Zimbabwe,2021,Moderate
+Zimbabwe,2022,Sensitive
+Zimbabwe,2023,Sensitive
+Zimbabwe,2024,Sensitive
