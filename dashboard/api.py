@@ -13,8 +13,11 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-BASE_DIR   = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'models')
-CSV_PATH   = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'pm25_2deg', 'data', 'final_land_dataset.csv')
+# Robust Path Handling for Local and Render.com
+# Find project root (one level up from dashboard/)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR     = os.path.join(PROJECT_ROOT, 'models')
+CSV_PATH     = os.path.join(PROJECT_ROOT, 'data', 'final_land_dataset.csv')
 
 # Load full dataset into memory at startup for fast /snapshot queries
 print("📂 Loading full dataset for time slider...")
