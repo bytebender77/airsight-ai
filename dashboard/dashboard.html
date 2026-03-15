@@ -1371,7 +1371,22 @@
           `${allMonths.length} months of data | ${allMonths[0][0]}–${allMonths[allMonths.length - 1][0]}`;
         onSlider(slider.value);
       } catch (e) {
-        // API not available — load static JSON
+        console.warn("API Months failed, using static fallback:", e);
+        // Fallback: Generate 84 months (Jan 2015 - Dec 2021)
+        allMonths = [];
+        for (let y = 2015; y <= 2021; y++) {
+          for (let m = 1; m <= 12; m++) {
+            allMonths.push([y, m]);
+          }
+        }
+        const slider = document.getElementById('timeSlider');
+        if (slider) {
+          slider.max = allMonths.length - 1;
+          slider.value = allMonths.length - 1;
+        }
+        document.getElementById('sliderInfo').textContent =
+          `${allMonths.length} months of data | 2015–2021 (Static Mode)`;
+
         fetch('dashboard_data.json').then(r => r.json()).then(d => renderSnapshot(d, 12));
       }
     }
