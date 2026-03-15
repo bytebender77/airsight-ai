@@ -695,12 +695,14 @@
                 <div class="col-legend">
                     <span class="col-tag col-required">lat</span>
                     <span class="col-tag col-required">lon</span>
-                    <span class="col-tag col-required">month</span>
-                    <span class="col-tag col-required">day_of_year</span>
-                    <span class="col-tag col-required">pm_today</span>
-                    <span class="col-tag col-required">pm_1d</span>
-                    <span class="col-tag col-required">pm_2d</span>
-                    <span class="col-tag col-required">pm_3d</span>
+                    <span class="col-tag col-required">pm_today <span style="font-size:8px;opacity:0.7">(or
+                            Geographic-Mean PM2.5)</span></span>
+                    <span class="col-tag col-required">pm_1d <span style="font-size:8px;opacity:0.7">(or
+                            pm_lag1)</span></span>
+                    <span class="col-tag col-required">pm_2d <span style="font-size:8px;opacity:0.7">(or
+                            pm_lag2)</span></span>
+                    <span class="col-tag col-required">pm_3d <span style="font-size:8px;opacity:0.7">(or
+                            pm_lag3)</span></span>
                     <span class="col-tag col-optional">pm_7d</span>
                     <span class="col-tag col-optional">temp_c</span>
                     <span class="col-tag col-optional">humidity</span>
@@ -844,14 +846,42 @@
             reader.onload = e => {
                 const lines = e.target.result.trim().split('\n');
                 const headers = lines[0].split(',').map(h => h.trim());
+
+                // Map competition headers to internal names
+                const mapping = {
+                    'Geographic-Mean PM2.5 [ug/m3]': 'pm_today',
+                    'pm_lag1': 'pm_1d',
+                    'pm_lag2': 'pm_2d',
+                    'pm_lag3': 'pm_3d',
+                    'Year': 'year',
+                    'Month': 'month',
+                    'Day': 'day'
+                };
+
                 const parsed = [];
                 for (let i = 1; i < lines.length; i++) {
                     const vals = lines[i].split(',').map(v => v.trim());
+                    if (vals.length < 2) continue;
+
                     const row = {};
-                    headers.forEach((h, j) => { if (vals[j] !== '' && vals[j] !== undefined) row[h] = parseFloat(vals[j]); });
-                    if (row.lat && row.lon && row.pm_today && row.pm_1d) {
-                        // normalize column names
-                        if (row.pm_2d === undefined && row['pm_2d'] === undefined) continue;
+                    headers.forEach((h, j) => {
+                        let val = vals[j];
+                        if (val !== '' && val !== undefined) {
+                            const internalKey = mapping[h] || h;
+                            row[internalKey] = isNaN(val) ? val : parseFloat(val);
+                        }
+                    });
+
+                    // Coordinate Fallback (Default to Delhi for competition data)
+                    if (row.lat === undefined) row.lat = 28.6;
+                    if (row.lon === undefined) row.lon = 77.2;
+
+                    // Date Fallback
+                    if (row.month === undefined) row.month = 12;
+                    if (row.day_of_year === undefined) row.day_of_year = 345;
+
+                    // Validation: Must have at least today and 1d lag to be useful
+                    if (row.pm_today !== undefined && row.pm_1d !== undefined) {
                         parsed.push(row);
                     }
                 }
