@@ -1261,15 +1261,24 @@
     }
 
     function renderSnapshot(data, selectedMonth) {
+      if (!data || !data.snapshot) { console.error("Invalid data for snapshot"); return; }
       dotLayer.clearLayers();
-      document.getElementById('hMean').textContent = data.stats.mean;
-      document.getElementById('hHazard').textContent = data.stats.hazard_zones.toLocaleString();
-      document.getElementById('hSafe').textContent = data.stats.safe_zones.toLocaleString();
-      document.getElementById('hTotal').textContent = data.stats.total_points.toLocaleString();
+
+      // Update Stats
+      if (data.stats) {
+        if (document.getElementById('hMean')) document.getElementById('hMean').textContent = data.stats.mean || '—';
+        if (document.getElementById('hHazard')) document.getElementById('hHazard').textContent = (data.stats.hazard_zones || 0).toLocaleString();
+        if (document.getElementById('hSafe')) document.getElementById('hSafe').textContent = (data.stats.safe_zones || 0).toLocaleString();
+        if (document.getElementById('hTotal')) document.getElementById('hTotal').textContent = (data.stats.total_points || data.snapshot.length).toLocaleString();
+      }
 
       const mn = MONTH_NAMES[(selectedMonth || 12) - 1];
       const yr = data.year || 2021;
-      document.getElementById('liveBadge').textContent = `● ${mn.toUpperCase()} ${yr}`;
+      const badge = document.getElementById('liveBadge');
+      if (badge) badge.textContent = `● ${mn.toUpperCase()} ${yr}`;
+
+      console.log(`Drawing ${data.snapshot.length} dots...`);
+      map.invalidateSize(); // Fix map container issues
 
       data.snapshot.forEach(r => {
         const dot = getDot(r);
@@ -1312,8 +1321,13 @@
         const data = await res.json();
         if (data.snapshot) renderSnapshot(data, month);
       } catch (e) {
-        // Fallback to static JSON on API failure
-        fetch('dashboard_data.json').then(r => r.json()).then(d => renderSnapshot(d, 12));
+        console.warn("API Switch failed, using static JSON:", e);
+        fetch('dashboard_data.json').then(r => r.json()).then(d => {
+          if (!allMonths.length) {
+            allMonths = [[2021, 12]]; // Minimal slider fallback
+          }
+          renderSnapshot(d, 12);
+        });
       }
     }
 
