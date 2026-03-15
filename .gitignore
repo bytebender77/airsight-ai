@@ -47,3 +47,8 @@ logs/
 
 # Earth Engine credentials (never commit these)
 .config/earthengine/
+
+# Internal docs (not for public repo)
+JUDGES_QA.md
+PRESENTATION_SCRIPT.md
+PROJECT_DOCUMENTATION.md
