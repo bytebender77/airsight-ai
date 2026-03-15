@@ -14,10 +14,12 @@
 
 ## 👨‍⚖️ Judges Path
 If you are evaluating this project, please follow this documentation path:
-1. **[Judges Q&A](JUDGES_QA.md):** Common questions about impact, data, and accuracy.
-2. **[Data Deep-Dive](data_pipeline/README.md):** How we extracted 7 years of satellite data.
-3. **[Model Architecture](models/README.md):** The XGBoost engine and feature engineering.
-4. **[Live Demo](https://bytebender77.github.io/airsight-ai):** See it in action.
+1. **[Executive Summary](EXECUTIVE_SUMMARY.md):** 1-page overview of the problem, solution, and results.
+2. **[Full Project Documentation](PROJECT_DOCUMENTATION.md):** Step-by-step technical deep-dive (data → model → dashboard).
+3. **[Judges Q&A](JUDGES_QA.md):** Common questions about impact, data, and accuracy.
+4. **[Data Pipeline Docs](data_pipeline/README.md):** How we extracted 7 years of satellite data.
+5. **[Model Architecture](models/README.md):** The XGBoost engine and feature engineering.
+6. **[Live Demo](https://bytebender77.github.io/airsight-ai):** See it in action.
 
 ---
 
